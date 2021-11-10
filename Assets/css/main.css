@@ -1,0 +1,43 @@
+*{
+    cursor: none;
+}
+
+body{
+    margin:0;
+    font-family:"Red Hat Mono";
+    background-color:#000;
+    color:#0F0
+}
+
+.hide{
+    display:none;
+}
+
+p{
+    margin-bottom: 5px;
+}
+
+#cursor{
+    color:#FFF;font-weight:900;
+}
+
+#input{
+    display: inline;
+}
+
+.line{
+    display: block;
+}
+
+.line.current{
+    display: inline-block;
+}
+
+.line-break{
+    margin-bottom: 25px;
+}
+
+.commands{
+    display: inline-block;
+    width: 100px;
+}
