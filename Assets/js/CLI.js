@@ -9,11 +9,15 @@ class CLI {
     constructor() {
         if(CLI.#instance === null){
             this.cli = document.querySelector('#cli');
-            Disk.create('C');
-            Folder.create('User', null, 'C');
-            Folder.create('Deskop', 'User');
-            this.position = 'C:\\User\\Desktop';
-            this.commands = ['help', 'cd', 'mkdir', 'rm', 'clear', 'reload', 'exit'];
+            this.fs = new FileSystem();
+            this.fs.Create('Disk', ['C']);
+            this.fs.Create('Folder', ['User', Disk.Get('C')]);
+            this.fs.Create('Folder', ['Desktop', Folder.Get('User')]);
+            this.fs.Create('Files', ['readme.txt', Folder.Get('Desktop')]);
+            this.fs.Create('Files', ['.secret', Folder.Get('Desktop')]);
+            this.position = Folder.Get('Desktop');
+            this.strPosition = this.getStringPosition();
+            this.commands = ['help', 'cd', 'mkdir', 'rm', 'clear', 'reload', 'exit', 'ls', 'touch'];
             this.cursor = document.querySelector('#cursor')
             this.input = document.querySelector('#input')
             this.newBlankLine();
@@ -39,7 +43,7 @@ class CLI {
         if(cl) cl.classList.remove('current');
         const line = document.createElement('p');
         line.classList.add('line', 'current');
-        line.innerHTML = this.position + '>&nbsp';
+        line.innerHTML = this.strPosition + '>&nbsp';
         this.cli.insertBefore(line, this.input);
     }
 
@@ -58,14 +62,16 @@ class CLI {
     }
 
     executeCommand(){
-        const cmd = this.input.innerText;
-        document.querySelector('.current').innerHTML += cmd;
+        const cmd = this.input.innerText.split(' ')[0];
+        const args = this.input.innerText.split(' ')[1];
+        document.querySelector('.current').innerHTML += this.input.innerText;
         if(this.commands.includes(cmd)){
             let i = this.commands.indexOf(cmd);
-            if(typeof(this[this.commands[i]]) === 'function'){ this[this.commands[i]]();}
+            if(typeof(this[this.commands[i]]) === 'function'){ 
+                this[this.commands[i]](args);
+            }
             else{ 
-                console.error(`Syntax Error: No ${this.commands[i]} function in this instance`);
-                // throw new SyntaxError(`No ${this.commands[i]} function in this instance`)
+                throw `No ${this.commands[i]} function in this instance`;
             }
             this.newBlankLine();
         }
@@ -98,9 +104,36 @@ class CLI {
         });
     }
 
+    getStringPosition(){
+        let str = "";
+        if(this.position instanceof Disk){
+            str += this.position.name + '\\:';
+        }
+        else{
+            let curr = this.position;
+            while(curr.parent instanceof Folder){
+                if(str === ''){
+                    str = curr.name;
+                }
+                else{
+                    str = curr.name + '\\' + str;
+                }
+                curr = curr.parent;
+            }
+            if(str === ''){
+                str = curr.parent.name + ':\\' + curr.name;
+            }
+            else{
+                str = curr.parent.name + ':\\' + curr.name + '\\' + str; 
+            }
+
+        }
+        return str;
+    }
+
     /** Commands */
 
-    help(){
+    help(args){
         this.newLine('<span class="commands">CD</span> Change active directory');
         this.newLine('<span class="commands">CLEAR</span> Clear console');
         this.newLine('<span class="commands">EXIT</span> Exit window');
@@ -112,35 +145,41 @@ class CLI {
         this.newLine('<span class="commands">RELOAD</span> Reload current window', true);
     }
 
-    clear(){
+    clear(args){
         document.querySelectorAll('.line').forEach(l => l.remove());
     }
 
-    exit(){
-        document.location.href = "https://www.google.fr/search?q=Valentin+Magry";
+    exit(args){
+        document.location.href = "https://www.google.fr/";
     }
 
-    reload(){
+    reload(args){
         document.location.reload();
     }
 
-    mkdir(){
+    mkdir(args){
 
     }
 
-    touch(){
+    touch(args){
 
     }
 
-    rm(){
+    rm(args){
 
     }
 
-    ls(){
-
+    ls(args){
+        let str = "..";
+        const hidden = args === '-a' ? true : false;
+        this.position.content.forEach(c => {
+            if(! c.name.startsWith('.') || (c.name.startsWith('.') && hidden)) 
+                str += '&nbsp;&nbsp;&nbsp;&nbsp;' + c.name
+        });
+        this.newLine(str, true)
     }
 
-    cd(){
+    cd(args){
 
     }
 
