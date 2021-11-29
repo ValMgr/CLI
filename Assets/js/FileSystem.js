@@ -17,6 +17,17 @@ class FileSystem{
         }
     }
 
+    Delete(element){
+        if(element instanceof Folder){
+            
+        }
+        else if(element instanceof Files){
+
+        }
+        else if(element instanceof Disk){
+
+        }
+    }
 
     Create(type, args){
         if(FileSystem.FileType.includes(type)){

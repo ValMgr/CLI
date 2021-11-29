@@ -31,7 +31,7 @@ docReady(() => {
     setVersion();
     initResizeObserver();
     initColorTheme();
-    document.querySelector('#close').addEventListener('click', () => {document.body.classList.remove('wopen')});
+    document.querySelector('#close').addEventListener('mousedown', () => {document.body.classList.remove('wopen')});
     setTimeout(() => document.querySelectorAll('.loading').forEach(e => e.classList.remove('loading')), 500);
     const cli = new CLI();
     cli.CreateFolder(['Users', Disk.Get('C')]);
@@ -41,5 +41,5 @@ docReady(() => {
     cli.CreateFile(['task.txt', task, Folder.Get('Desktop')]);
     cli.CreateFile(['.secret', secret, Folder.Get('Desktop')]);
     cli.SetPosition('Desktop');
-    console.log(Files.Get('helper.txt'));
+    // console.log(Files.Get('helper.txt'));
 });

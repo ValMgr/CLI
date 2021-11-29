@@ -17,6 +17,7 @@ class CLI {
             'open', 'ls', 'touch', 'echo', 'nano'];
             this.cursor = document.querySelector('#cursor')
             this.input = document.querySelector('#input')
+            this.window = document.querySelector('.window');
             this.newBlankLine();
             this.getInput();
             this.cursorBlink();
@@ -105,23 +106,25 @@ class CLI {
     }
 
     clearInput(){
-        console.log
         this.input.innerHTML = "";
     }
 
     getInput(){
         const notAllowed = ['Control', 'Alt', 'Meta', 'Shift', 'CapsLock', 'Tab',
         'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'Escape', 'Dead', '&'];
+        let trigger = false;
         document.addEventListener('keydown', (e) => {
-            if(!notAllowed.includes(e.key) && e.key !== 'Backspace' && e.key !== 'Enter'){
-                this.input.innerText += e.key;
-            }
-            else if(e.key === 'Enter'){
-                this.executeCommand();
-            }
-            else if(e.key === 'Backspace'){
-                this.removeLastChar();
-            }
+            if(!document.body.classList.contains('wopen')){
+                if(!notAllowed.includes(e.key) && e.key !== 'Backspace' && e.key !== 'Enter'){
+                    this.input.innerText += e.key;
+                }
+                else if(e.key === 'Enter'){
+                    this.executeCommand();
+                }
+                else if(e.key === 'Backspace'){
+                    this.removeLastChar();
+                }
+            } 
         });
     }
 
@@ -200,7 +203,21 @@ class CLI {
     }
     
     open(args){
-        this.WorkInProgress();
+        const file = Files.Get(args);
+        if(file !== undefined){
+            this.window.querySelector('#file_name').innerHTML = file.name;
+            const content = this.window.querySelector('.content');
+            content.innerHTML = "";
+            file.content.forEach(l => {
+                const line = document.createElement('p');
+                line.innerText = l;
+                content.append(line);
+            });
+            document.body.classList.add('wopen');
+        }
+        else{
+            this.newLine(`The file ${this.strPosition}\\${args} doest exist`);
+        }
     }
 
     ls(args){

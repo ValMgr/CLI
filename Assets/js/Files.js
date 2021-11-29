@@ -15,7 +15,7 @@ class Files {
         else {
             if(typeof content !== 'function'){ 
                 this.ext = 'txt';
-                if (!name.includes('.txt')) name += '.txt';
+                if (!name.includes('.txt') && !name.startsWith('.')) name += '.txt';
             }
             else{
                 this.ext = 'exe';
