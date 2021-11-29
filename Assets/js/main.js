@@ -18,6 +18,18 @@ function setVersion(){
 }
 
 docReady(() => {
+    setVersion();
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.body.classList.add('dark-mode');
+    document.querySelector('#close').addEventListener('click', () => {document.body.classList.remove('wopen')});
+    setTimeout(() => document.querySelectorAll('.loading').forEach(e => e.classList.remove('loading')), 500);
     const cli = new CLI();
-    setVersion()
+    cli.CreateFolder(['Users', Disk.Get('C')]);
+    cli.CreateFolder(['Guest', Folder.Get('Users')]);
+    cli.CreateFolder(['Desktop', Folder.Get('Guest')]);
+    cli.CreateFile(['helper.txt', helper, Folder.Get('Desktop')]);
+    cli.CreateFile(['task.txt', task, Folder.Get('Desktop')]);
+    cli.CreateFile(['.secret', secret, Folder.Get('Desktop')]);
+    cli.SetPosition('Desktop');
+    console.log(Files.Get('helper.txt'));
 });

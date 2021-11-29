@@ -30,8 +30,8 @@ class FileSystem{
                     new Folder(args[0], args[1]);
                     break;
                 case 'Files':
-                    if(args.length !== 2) throw 'Invalid arguments given';
-                    new Files(args[0], args[1]);
+                    if(args.length !== 3) throw 'Invalid arguments given';
+                    new Files(args[0], args[1], args[2]);
                     break;
             }
         }

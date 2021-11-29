@@ -41,3 +41,109 @@ p{
     display: inline-block;
     width: 100px;
 }
+
+.cmd{
+    transition: .35s ease;
+}
+
+.window{
+    position: absolute;
+    width: 80vw;
+    height: 80vh;
+    top: 20vh;
+    left: 10vw;
+    background-color: #ebebeb;
+    z-index: 2;
+    border-radius: 5px;
+    transform-origin: bottom;
+    transform: scaleY(0) scaleX(.6);
+    transition: transform .5s .15s ease, top .35s ease;
+}
+
+.dark-mode .window{
+    background-color: rgb(34, 33, 33);
+}
+
+.loading{
+    display: none !important;
+}
+
+.wopen .window{
+    top: 10vh;
+    transform: scale(1);
+}
+
+.window, .window *{
+    cursor: default;
+}
+
+.header{
+    background-color: #dddddd;
+    width: calc(100% - 10px);
+    height: 20px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    border-radius:  5px 5px 0 0;
+    position: relative;
+    border-bottom: 2px solid #d1d1d1;
+    color: #000;
+}
+
+.dark-mode .header{
+    background-color: rgb(54, 48, 48);
+    color: rgb(200, 200, 200);
+    border-bottom: 2px solid rgb(22, 22, 22);
+}
+
+.buttons{
+    margin-left: 10px;
+}
+
+.header h5{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+button{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer !important;
+    transition: .35s ease;
+}
+
+button:hover{
+    filter: brightness(.8);
+}
+
+.wopen .cmd{
+    filter: blur(1px) brightness(.3);
+}
+
+.content{
+    width: calc(100% - 20px);
+    height: calc(100% - 50px);
+    padding: 10px;
+    color: #000;
+}
+
+.dark-mode .content{
+    color: rgb(230, 230, 230);
+}
+
+#close{
+    background-color: rgb(230, 19, 19);
+}
+
+#reduce{
+    background-color: rgb(236, 207, 18);
+}
+
+#full-screen{
+    background-color: rgb(16, 222, 16);
+}

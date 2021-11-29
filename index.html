@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="Assets/favicons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="Assets/favicons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="Assets/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="150x150" href="Assets/favicons/ms-icon-150x150.png"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -11,14 +15,30 @@
     <link rel="stylesheet" href="Assets/css/main.css">
     <title>Portfolio CLI</title>
 </head>
-<body>
+<body class="">
 
-    <header>
-        <h1>Portfolio [version 0.1.444.<span id="version">000000</span>]</h1>
-        <h2 style="margin-bottom: 3em">(c) Valentin Magry. All rights reserved.</h2>
-    </header>
-    <div id="cli">
-        <p id="input"></p><span id="cursor">_</span>
+    <div class="cmd">
+        <header>
+            <h1>Portfolio [version 0.1.444.<span id="version">000000</span>]</h1>
+            <h2 style="margin-bottom: 3em">(c) Valentin Magry. All rights reserved.</h2>
+        </header>
+        <div id="cli">
+            <p id="input"></p><span id="cursor">_</span>
+        </div>
+    </div>
+
+    <div class="window loading">
+        <div class="header">
+            <div class="buttons">
+                <button id="close"></button>
+                <button id="reduce"></button>
+                <button id="full-screen"></button>
+            </div>
+            <h5>window name</h2>
+        </div>
+        <div class="content">
+
+        </div>
     </div>
     
 </body>
@@ -27,5 +47,6 @@
 <script src="Assets/js/Files.js"></script>
 <script src="Assets/js/FileSystem.js"></script>
 <script src="Assets/js/CLI.js"></script>
+<script src="Assets/js/Content.js"></script>
 <script src="Assets/js/main.js"></script>
 </html>

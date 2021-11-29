@@ -11,13 +11,10 @@ class CLI {
             this.cli = document.querySelector('#cli');
             this.fs = new FileSystem();
             this.fs.Create('Disk', ['C']);
-            this.fs.Create('Folder', ['User', Disk.Get('C')]);
-            this.fs.Create('Folder', ['Desktop', Folder.Get('User')]);
-            this.fs.Create('Files', ['readme.txt', Folder.Get('Desktop')]);
-            this.fs.Create('Files', ['.secret', Folder.Get('Desktop')]);
-            this.position = Folder.Get('Desktop');
+            this.position = Disk.Get('C')
             this.strPosition = this.getStringPosition();
-            this.commands = ['help', 'cd', 'mkdir', 'rm', 'clear', 'reload', 'exit', 'ls', 'touch'];
+            this.commands = ['help', 'cd', 'mkdir', 'rm', 'clear', 'reload', 'exit',
+            'open', 'ls', 'touch', 'echo', 'nano'];
             this.cursor = document.querySelector('#cursor')
             this.input = document.querySelector('#input')
             this.newBlankLine();
@@ -28,6 +25,29 @@ class CLI {
         else{
             throw 'An instance of this Class already exist';
         }
+    }
+
+    CreateFile(args){
+        this.fs.Create('Files', args);
+    }
+
+    CreateFolder(args){
+        this.fs.Create('Folder', args);
+    }
+
+    SetPosition(target){
+        if(Disk.Get(target) !== undefined){
+            this.position = Disk.Get(target);
+        }
+        else if(Folder.Get(target) !== undefined){
+            this.position = Folder.Get(target);
+        }
+        else{
+            throw `Unable to find ${target} path`;
+        }
+        this.strPosition = this.getStringPosition();
+        this.clear();
+        this.newBlankLine()
     }
    
     cursorBlink() {
@@ -62,8 +82,9 @@ class CLI {
     }
 
     executeCommand(){
-        const cmd = this.input.innerText.split(' ')[0];
-        const args = this.input.innerText.split(' ')[1];
+        const input = this.input.innerText;
+        const cmd = input.split(' ')[0];
+        const args = input.indexOf(' ') !== -1 ? input.substring(input.indexOf(' ')+1) : null;
         document.querySelector('.current').innerHTML += this.input.innerText;
         if(this.commands.includes(cmd)){
             let i = this.commands.indexOf(cmd);
@@ -73,6 +94,7 @@ class CLI {
             else{ 
                 throw `No ${this.commands[i]} function in this instance`;
             }
+            this.newLine('', true);
             this.newBlankLine();
         }
         else{
@@ -89,9 +111,8 @@ class CLI {
 
     getInput(){
         const notAllowed = ['Control', 'Alt', 'Meta', 'Shift', 'CapsLock', 'Tab',
-        'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'Escape', 'Dead'];
+        'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'Escape', 'Dead', '&'];
         document.addEventListener('keydown', (e) => {
-            e.preventDefault();
             if(!notAllowed.includes(e.key) && e.key !== 'Backspace' && e.key !== 'Enter'){
                 this.input.innerText += e.key;
             }
@@ -138,11 +159,14 @@ class CLI {
         this.newLine('<span class="commands">CLEAR</span> Clear console');
         this.newLine('<span class="commands">EXIT</span> Exit window');
         this.newLine('<span class="commands">HELP</span> List of available commands');
+        this.newLine('<span class="commands">NANO</span> Edit file content');
         this.newLine('<span class="commands">LS</span> View list of folders and files');
         this.newLine('<span class="commands">MKDIR</span> Create directory');
         this.newLine('<span class="commands">TOUCH</span> Create file in the current directory');
+        this.newLine('<span class="commands">OPEN</span> Open or execute file');
+        this.newLine('<span class="commands">ECHO</span> Print content');
         this.newLine('<span class="commands">RM</span> Delete file or directory');
-        this.newLine('<span class="commands">RELOAD</span> Reload current window', true);
+        this.newLine('<span class="commands">RELOAD</span> Reload current window');
     }
 
     clear(args){
@@ -158,30 +182,76 @@ class CLI {
     }
 
     mkdir(args){
-
+        const name = args.replace(' ', '_');
+        this.fs.Create('Folder', [name, this.position]);
     }
 
     touch(args){
-
+        const name = args.replace(' ', '_');
+        this.fs.Create('File', [name, this.position]);
     }
 
     rm(args){
+        this.WorkInProgress();
+    }
 
+    nano(args){
+        this.WorkInProgress();
+    }
+    
+    open(args){
+        this.WorkInProgress();
     }
 
     ls(args){
-        let str = "..";
-        const hidden = args === '-a' ? true : false;
-        this.position.content.forEach(c => {
-            if(! c.name.startsWith('.') || (c.name.startsWith('.') && hidden)) 
-                str += '&nbsp;&nbsp;&nbsp;&nbsp;' + c.name
-        });
-        this.newLine(str, true)
+        const validArgs = ['-a'];
+        if(args === null || validArgs.includes(args)){      
+            let str = "..";
+            const hidden = args === '-a' ? true : false;
+            this.position.content.map(c => {
+                if(! c.name.startsWith('.') || (c.name.startsWith('.') && hidden)) 
+                    str += '&nbsp;&nbsp;&nbsp;&nbsp;' + c.name;
+            });
+            this.newLine(str);
+        }
+        else{
+            this.newLine(`Unknow ${args} argument for this command`);
+        }
     }
 
     cd(args){
-
+        const validArgs = ['..'];
+        this.position.content.map(e => {if(e instanceof Folder) validArgs.push(e.name)});
+        if(validArgs.includes(args)){
+            if(args === '..'){
+                this.position = this.position.parent;
+            }
+            else{
+                this.position = Folder.Get(args);
+            }
+            this.strPosition = this.getStringPosition();
+        }
+        else if(args === null){
+            this.newLine('No target name given', true);
+        }
+        else{
+            if(Files.Get(args) !== undefined){
+                this.newLine(`${args} is not a directory.`, true);
+            }
+            else{
+                this.newLine(`Unable to find the path &laquo; ${this.strPosition}\\${args} &raquo;`, true);
+            }
+        }
     }
 
+    echo(args){
+        let str = args.replace(/['"]/g, '');
+        this.newLine(str);
+    }
+
+
+    WorkInProgress(){
+        this.newLine('Function not working yet. Work in progress.');
+    }
 
 }
