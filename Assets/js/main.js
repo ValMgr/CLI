@@ -17,10 +17,20 @@ function setVersion(){
     document.querySelector('#version').innerHTML = v;
 }
 
-docReady(() => {
-    setVersion();
+function initColorTheme(){
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
         document.body.classList.add('dark-mode');
+}
+
+function initResizeObserver(){
+    const resizeObserver = new ResizeObserver(e => window.scrollTo(0,document.body.scrollHeight));
+    resizeObserver.observe(document.body)
+}
+
+docReady(() => {
+    setVersion();
+    initResizeObserver();
+    initColorTheme();
     document.querySelector('#close').addEventListener('click', () => {document.body.classList.remove('wopen')});
     setTimeout(() => document.querySelectorAll('.loading').forEach(e => e.classList.remove('loading')), 500);
     const cli = new CLI();
