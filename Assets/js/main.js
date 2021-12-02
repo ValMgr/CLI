@@ -38,8 +38,8 @@ docReady(() => {
     cli.CreateFolder(['Guest', Folder.Get('Users')]);
     cli.CreateFolder(['Desktop', Folder.Get('Guest')]);
     cli.CreateFile(['helper.txt', helper, Folder.Get('Desktop')]);
-    cli.CreateFile(['task.txt', task, Folder.Get('Desktop')]);
-    cli.CreateFile(['.secret', secret, Folder.Get('Desktop')]);
+    cli.CreateFile(['tasks.txt', task, Folder.Get('Desktop')]);
+    cli.CreateFile(['.codes', validCode, Folder.Get('Desktop')]);
     cli.SetPosition('Desktop');
     // console.log(Files.Get('helper.txt'));
 });

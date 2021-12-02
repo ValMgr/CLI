@@ -6,7 +6,7 @@ class Files {
         return Files.list.filter(d => d.name === name)[0];
     }
 
-    static fileType = ['txt', 'exe'];
+    static fileType = ['txt', 'exe', 'zip'];
 
     constructor(name, content = [], parent) {
         if (!name.startsWith('.') && name.indexOf('.') !== -1 && Files.fileType.includes(name.split('.')[1])) {
@@ -19,7 +19,7 @@ class Files {
             }
             else{
                 this.ext = 'exe';
-                if (!name.includes('.exe')) name += '.exe';
+                if (!name.includes('.exe') && !name.startsWith('.')) name += '.exe';
             }
         }
         this.name = name;

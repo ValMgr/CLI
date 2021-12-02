@@ -159,6 +159,7 @@ class CLI {
 
     help(args){
         this.newLine('<span class="commands">CD</span> Change active directory');
+        this.newLine('<span class="commands">OPEN</span> Open or execute file');
         this.newLine('<span class="commands">CLEAR</span> Clear console');
         this.newLine('<span class="commands">EXIT</span> Exit window');
         this.newLine('<span class="commands">HELP</span> List of available commands');
@@ -166,7 +167,6 @@ class CLI {
         this.newLine('<span class="commands">LS</span> View list of folders and files');
         this.newLine('<span class="commands">MKDIR</span> Create directory');
         this.newLine('<span class="commands">TOUCH</span> Create file in the current directory');
-        this.newLine('<span class="commands">OPEN</span> Open or execute file');
         this.newLine('<span class="commands">ECHO</span> Print content');
         this.newLine('<span class="commands">RM</span> Delete file or directory');
         this.newLine('<span class="commands">RELOAD</span> Reload current window');
@@ -205,15 +205,20 @@ class CLI {
     open(args){
         const file = Files.Get(args);
         if(file !== undefined){
-            this.window.querySelector('#file_name').innerHTML = file.name;
-            const content = this.window.querySelector('.content');
-            content.innerHTML = "";
-            file.content.forEach(l => {
-                const line = document.createElement('p');
-                line.innerText = l;
-                content.append(line);
-            });
-            document.body.classList.add('wopen');
+            if(file.ext === 'txt'){
+                this.window.querySelector('#file_name').innerHTML = file.name;
+                const content = this.window.querySelector('.content');
+                content.innerHTML = "";
+                file.content.forEach(l => {
+                    const line = document.createElement('p');
+                    line.innerHTML = l;
+                    content.append(line);
+                });
+                document.body.classList.add('wopen');
+            }
+            else{
+                file['content']();
+            }
         }
         else{
             this.newLine(`The file ${this.strPosition}\\${args} doest exist`);

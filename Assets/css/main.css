@@ -157,3 +157,12 @@ button:hover{
     background-color: #000;
     display: none;
 }
+
+.content p{
+    min-height: 16px;
+}
+
+.content span{
+    min-width: 100px;
+    display: inline-block;
+}
