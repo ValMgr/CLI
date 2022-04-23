@@ -1,9 +1,16 @@
-class Folder{
+import Disk from "./Disk.js";
+
+export default class Folder{
 
     static list = []
 
-    static Get(name){
-        return Folder.list.filter(d => d.name === name)[0];
+    static Get(path){
+        path = path.replace(':', '').split('\\').filter(e => e !== '');
+        let folder = Disk.Get(path.shift());
+        path.forEach(f => {
+            if(folder) folder = folder.content.find(e => e.name === f);
+        });
+        return folder;
     }
 
     constructor(name, parent){

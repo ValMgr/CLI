@@ -1,4 +1,8 @@
-class FileSystem{
+import Disk from "./Disk.js";
+import Folder from "./Folder.js";
+import Files from "./Files.js";
+
+export default class FileSystem{
 
     static #instance = null;
 

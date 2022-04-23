@@ -1,9 +1,10 @@
-class Disk{
+export default class Disk{
 
     static list = [];
 
     static Get(name){
-        return Disk.list.filter(d => d.name === name)[0];
+        if(name.length > 1) name = name[0];
+        return Disk.list.find(d => d.name === name);
     }
     
 

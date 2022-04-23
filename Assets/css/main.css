@@ -1,168 +1,211 @@
-*{
-    cursor: none;
+* {
+  cursor: none;
 }
 
-body{
-    margin:0;
-    font-family:"Red Hat Mono";
-    background-color:#000;
-    color:#0F0
+body {
+  margin: 0;
+  font-family: "Red Hat Mono";
+  background-color: #000;
+  color: #0f0;
 }
 
-.hide{
-    display:none;
+a, a:visited{
+  color: #0f0;
+  transition: .15s ease;
 }
 
-p{
-    margin-bottom: 5px;
+a:hover, a:focus{
+    color: rgb(255, 217, 0);
+    cursor: pointer;
 }
 
-#cursor{
-    color:#FFF;font-weight:900;
+.hide {
+  display: none;
 }
 
-#input{
-    display: inline;
+p {
+  margin-bottom: 5px;
 }
 
-.line{
-    display: block;
+#cursor {
+  color: #fff;
+  font-weight: 900;
 }
 
-.line.current{
-    display: inline-block;
+#input {
+  display: inline;
 }
 
-.line-break{
-    margin-bottom: 25px;
+.line {
+  display: block;
 }
 
-.commands{
-    display: inline-block;
-    width: 100px;
+.line.current {
+  display: inline-block;
 }
 
-.cmd{
-    transition: .35s ease;
+.line-break {
+  margin-bottom: 25px;
 }
 
-.window{
-    position: absolute;
-    width: 80vw;
-    height: 80vh;
-    top: 20vh;
-    left: 10vw;
-    background-color: #ebebeb;
-    z-index: 2;
-    border-radius: 5px;
-    transform-origin: bottom;
-    transform: scaleY(0) scaleX(.6);
-    transition: transform .5s .15s ease, top .35s ease;
+.commands {
+  display: inline-block;
+  width: 100px;
 }
 
-.dark-mode .window{
-    background-color: rgb(34, 33, 33);
+.cmd {
+  transition: 0.35s ease;
 }
 
-.loading{
-    display: none !important;
+.window {
+  position: absolute;
+  width: 80vw;
+  height: 80vh;
+  top: 20vh;
+  left: 10vw;
+  background-color: #ebebeb;
+  z-index: 2;
+  border-radius: 5px;
+  transform-origin: bottom;
+  transform: scaleY(0) scaleX(0.6);
+  transition: transform 0.5s 0.15s ease, top 0.35s ease;
 }
 
-.wopen .window{
-    top: 10vh;
-    transform: scale(1);
+.dark-mode .window {
+  background-color: rgb(34, 33, 33);
 }
 
-.window, .window *{
-    cursor: default;
+.loading {
+  display: none !important;
 }
 
-.header{
-    background-color: #dddddd;
-    width: calc(100% - 10px);
-    height: 20px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    border-radius:  5px 5px 0 0;
-    position: relative;
-    border-bottom: 2px solid #d1d1d1;
-    color: #000;
+.wopen .window {
+  top: 10vh;
+  transform: scale(1);
 }
 
-.dark-mode .header{
-    background-color: rgb(54, 48, 48);
-    color: rgb(200, 200, 200);
-    border-bottom: 2px solid rgb(22, 22, 22);
+.window,
+.window * {
+  cursor: default;
 }
 
-.buttons{
-    margin-left: 10px;
+.header {
+  background-color: #dddddd;
+  width: calc(100% - 10px);
+  height: 20px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px 5px 0 0;
+  position: relative;
+  border-bottom: 2px solid #d1d1d1;
+  color: #000;
 }
 
-.header h5{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.dark-mode .header {
+  background-color: rgb(54, 48, 48);
+  color: rgb(200, 200, 200);
+  border-bottom: 2px solid rgb(22, 22, 22);
 }
 
-
-button{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer !important;
-    transition: .35s ease;
+.buttons {
+  margin-left: 10px;
 }
 
-button:hover{
-    filter: brightness(.8);
+.header h5 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.wopen .cmd{
-    filter: blur(1px) brightness(.3);
+button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer !important;
+  transition: 0.35s ease;
 }
 
-.content{
-    width: calc(100% - 20px);
-    height: calc(100% - 50px);
-    padding: 10px;
-    color: #000;
+button:hover {
+  filter: brightness(0.8);
 }
 
-.dark-mode .content{
-    color: rgb(230, 230, 230);
+.wopen .cmd {
+  filter: blur(1px) brightness(0.3);
 }
 
-#close{
-    background-color: rgb(230, 19, 19);
+.content {
+  width: calc(100% - 20px);
+  height: calc(100% - 50px);
+  padding: 10px;
+  color: #000;
 }
 
-#reduce{
-    background-color: rgb(236, 207, 18);
+.dark-mode .content {
+  color: rgb(230, 230, 230);
 }
 
-#full-screen{
-    background-color: rgb(16, 222, 16);
+#close {
+  background-color: rgb(230, 19, 19);
 }
 
-.nano{
-    position:fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #000;
-    display: none;
+#reduce {
+  background-color: rgb(236, 207, 18);
 }
 
-.content p{
-    min-height: 16px;
+#full-screen {
+  background-color: rgb(16, 222, 16);
 }
 
-.content span{
-    min-width: 100px;
-    display: inline-block;
+.nano {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  display: none;
+}
+
+.nopen .nano {
+  display: block;
+}
+
+.nano header {
+  color: #000;
+  background-color: #0f0;
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 30px;
+  margin-bottom: 3em;
+}
+
+.nano footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+}
+
+.nano .edit {
+  margin: auto;
+  width: calc(90% + 60px);
+}
+
+.content p {
+  min-height: 16px;
+}
+
+.content span {
+  min-width: 100px;
+  display: inline-block;
+}
+
+#modified_nano.not {
+  color: #0f0;
 }

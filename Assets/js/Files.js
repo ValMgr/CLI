@@ -1,4 +1,6 @@
-class Files {
+import Disk from "./Disk.js";
+
+export default class Files {
 
     static list = [];
 
