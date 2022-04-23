@@ -17,9 +17,17 @@ export default class Folder{
         this.name = name;
         this.parent = parent;
         this.disk = parent instanceof Disk ? parent : parent.disk;
+        this.weight = 256;
         this.parent.AddContent(this);
         this.content = [];
         Folder.list.push(this);
+    }
+
+    updateWeight(){
+        this.weight = 256;
+        this.content.forEach(c => {
+            this.weight += c.weight;
+        });
     }
 
     AddContent(c){
@@ -27,6 +35,9 @@ export default class Folder{
             throw 'Disk cannot be children of Folders';
         } else {
             this.content.push(c)
+            this.weight += c.weight;
+            this.parent.updateWeight();
+
         }
     }
 

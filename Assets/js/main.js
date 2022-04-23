@@ -81,7 +81,7 @@ docReady(() => {
   cli.CreateFile(["readme.txt", readme, Folder.Get("C:\\Users\\Public\\Desktop")]);
   cli.CreateFile(["tasks.txt", task, Folder.Get("C:\\Users\\Public\\Desktop")]);
   cli.CreateFile(["my_resume.txt", me, Folder.Get("C:\\Users\\Public\\Desktop")]);
-  cli.CreateFile(["status.txt", status, Folder.Get("C:\\Users\\Public\\Desktop")]);
+  cli.CreateFile([".status.txt", status, Folder.Get("C:\\Users\\Public\\Desktop")]);
   cli.CreateFile(["my_projects.txt", projects, Folder.Get("C:\\Users\\Public\\Desktop")]);
   cli.CreateFile(["unlock.exe", validCode, Folder.Get("C:\\Users\\Public\\Desktop")]);
   cli.CreateFile(["decrypt.exe", decrypt, Folder.Get("C:\\Applications")]);

@@ -48,7 +48,8 @@ p {
   margin-bottom: 25px;
 }
 
-.commands {
+.commands,
+.fileWeight {
   display: inline-block;
   width: 100px;
 }

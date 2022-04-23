@@ -172,7 +172,6 @@ export default class CLI {
       str += this.position.name + "\\:";
     } else {
       let curr = this.position;
-      console.log(curr)
       while (curr.parent instanceof Folder) {
         if (str === "") {
           str = curr.name;
@@ -288,14 +287,28 @@ export default class CLI {
       let str = "..";
       const hidden =
         args === "-a" || args === "-al" || args === "-la" ? true : false;
+      const isList = 
+        args === "-l" || args === "-al" || args === "-la" ? true : false;
       this.position.content.map((c) => {
-        if (!c.name.startsWith(".") || (c.name.startsWith(".") && hidden))
-          str += "&nbsp;&nbsp;&nbsp;&nbsp;" + c.name;
+        if (!c.name.startsWith(".") || (c.name.startsWith(".") && hidden)){
+          if(!isList){
+            str += "&nbsp;&nbsp;&nbsp;&nbsp;" + c.name;
+          }
+          else{
+            const type = c instanceof Folder ? "d" : "-";
+            str = `${type}rwx------@>&nbsp; root &nbsp; admin &nbsp; <span class="fileWeight">${c.weight}</span>${c.name}`;
+            this.newLine(str);
+          }
+        }
       });
-      this.newLine(str);
+      if(!isList) this.newLine(str);
     } else {
       this.newLine(`Unknow ${args} argument for this command`);
     }
+  }
+  
+  ll(args){
+    this.ls("-la");
   }
 
   cd(args) {
@@ -307,10 +320,11 @@ export default class CLI {
       if (args === "..") {
         this.position = this.position.parent;
       } else {
-        this.position = Folder.Get(args);
+        this.position = this.position.content.find(e => e.name === args);
       }
       this.strPosition = this.getStringPosition();
     } else if (args === null) {
+      console.log('no args')
       this.position = this.fs.root;
       this.strPosition = this.getStringPosition();
     } else {

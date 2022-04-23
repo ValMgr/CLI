@@ -25,6 +25,7 @@ export default class Files {
             }
         }
         this.name = name;
+        this.weight = Math.floor(Math.random() * 2048) + 1024;
         this.parent = parent;
         this.disk = parent instanceof Disk ? parent : parent.disk;
         this.parent.AddContent(this);

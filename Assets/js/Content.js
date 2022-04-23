@@ -55,6 +55,9 @@ export const status = [
   "",
   "Bugs to fix: ",
   "   - Cannot cd back with more than one level",
+  "",
+  "Ideas: ",
+  "   - Add weight / space management to disks",
 ]
 
 // exe files content
