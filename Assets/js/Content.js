@@ -16,8 +16,9 @@ export const readme = [
 ];
 
 export const task = [
-  "Global Task: Find the codes",
+  "Global Task: You have to unlock the website secret using unlock.exe",
   "",
+  "These secondary tasks are here to guide you through the website to fullfill the main tasks.",
   "Task 1: WIP",
   "Task 2: WIP",
   "Task 3: WIP",
@@ -39,8 +40,14 @@ export const me = [
   "I've worked at Sõcreativ' for two years now as a web developer in apprenticeship.",
   "It's been an awesome opportunity and I learned a lot.",
   "",
+  "I'm currently looking for a new apprenticeship in front-end development. I'm open to new challenges and I'm looking for a new team.",
+  "",
+  "Web dev aside, I've also other interests like F1 🏎, aeronautics 🚁, and above all military simulation through milsim games or airsoft 🔫",
+  "",
   "You can check my github profile here: https://github.com/ValMgr ",
   "and also my linkedin profile here: https://www.linkedin.com/in/valentin-magry/ ",
+  "",
+  "Feel free to contact me if you have any questions or if you want to know more about me at val.magry@gmail.com",
 ];
 
 export const projects = ["coming soon...", ""];
@@ -48,17 +55,23 @@ export const projects = ["coming soon...", ""];
 export const status = [
   "Global Status: ",
   "Website at 43% completed",
+
   "",
   "Missing features: ",
   "   - project list file",
   "   - game to find secret codes",
+  "   - nano editor",
+
   "",
   "Bugs to fix: ",
   "   - Cannot cd back with more than one level",
+
   "",
   "Ideas: ",
   "   - Add weight / space management to disks",
-]
+  "   - vim editor alternative to nano",
+  "   - Add zip/targz files support",
+];
 
 // exe files content
 
@@ -69,5 +82,3 @@ export function validCode() {
 export function decrypt() {}
 
 // zip files content
-
-export default function Content() {}

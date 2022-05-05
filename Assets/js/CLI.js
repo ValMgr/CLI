@@ -57,13 +57,11 @@ export default class CLI {
   SetPosition(path) {
     if (path.length <= 3 && Disk.Get(path[0]) instanceof Disk) {
       this.position = Disk.Get(path[0]);
-    }
-    else if(Folder.Get(path)) {
+    } else if (Folder.Get(path)) {
       this.position = Folder.Get(path);
-    }
-    else{
+    } else {
       console.warn(`${path} not found`);
-      this.SetPosition('C:\\');
+      this.SetPosition("C:\\");
     }
     this.strPosition = this.getStringPosition();
     this.clear();
@@ -109,6 +107,7 @@ export default class CLI {
         ? input.substring(input.indexOf(" ") + 1)
         : null;
     document.querySelector(".current").innerHTML += this.input.innerText;
+
     if (this.commands.includes(cmd)) {
       let i = this.commands.indexOf(cmd);
       if (typeof this[this.commands[i]] === "function") {
@@ -116,15 +115,15 @@ export default class CLI {
       } else {
         throw `No ${this.commands[i]} function in this instance`;
       }
-      this.newLine("", true);
-      this.newBlankLine();
+    } else if (this.position.content.map((e) => e.name).includes(cmd)) {
+      this.open(cmd);
     } else {
       this.newLine(
-        `${cmd} command not found. Use help command to see available commands.`,
-        true
+        `${cmd} command not found. Use help command to see available commands.`
       );
-      this.newBlankLine();
     }
+    this.newLine("", true);
+    this.newBlankLine();
     this.clearInput();
   }
 
@@ -287,27 +286,26 @@ export default class CLI {
       let str = "..";
       const hidden =
         args === "-a" || args === "-al" || args === "-la" ? true : false;
-      const isList = 
+      const isList =
         args === "-l" || args === "-al" || args === "-la" ? true : false;
       this.position.content.map((c) => {
-        if (!c.name.startsWith(".") || (c.name.startsWith(".") && hidden)){
-          if(!isList){
+        if (!c.name.startsWith(".") || (c.name.startsWith(".") && hidden)) {
+          if (!isList) {
             str += "&nbsp;&nbsp;&nbsp;&nbsp;" + c.name;
-          }
-          else{
+          } else {
             const type = c instanceof Folder ? "d" : "-";
-            str = `${type}rwx------@>&nbsp; root &nbsp; admin &nbsp; <span class="fileWeight">${c.weight}</span>${c.name}`;
+            str = `${type}rwx------&nbsp; ${c.hardlink}&nbsp; root &nbsp; admin &nbsp; <span class="fileWeight">${c.weight}</span>${c.name}`;
             this.newLine(str);
           }
         }
       });
-      if(!isList) this.newLine(str);
+      if (!isList) this.newLine(str);
     } else {
       this.newLine(`Unknow ${args} argument for this command`);
     }
   }
-  
-  ll(args){
+
+  ll(args) {
     this.ls("-la");
   }
 
@@ -320,11 +318,11 @@ export default class CLI {
       if (args === "..") {
         this.position = this.position.parent;
       } else {
-        this.position = this.position.content.find(e => e.name === args);
+        this.position = this.position.content.find((e) => e.name === args);
       }
       this.strPosition = this.getStringPosition();
     } else if (args === null) {
-      console.log('no args')
+      console.log("no args");
       this.position = this.fs.root;
       this.strPosition = this.getStringPosition();
     } else {
